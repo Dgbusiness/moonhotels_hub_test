@@ -70,7 +70,7 @@ class HUB extends Controller
     public function search(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'hotelId' => 'required|integer',
+            'hotelId' => 'required|array',
             'checkIn' => 'required|date',
             'checkOut' => 'required|date|after:checkIn',
             'numberOfGuests' => 'required|integer|min:1',
