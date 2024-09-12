@@ -2,6 +2,7 @@
 import DatePicker from 'primevue/datepicker';
 import { useListOfRooms } from '../store/RoomStore';
 import { mapActions, mapStores } from 'pinia';
+import { dateFormatter } from '../helpers/DateFormatter';
 
 </script>
 
@@ -85,13 +86,15 @@ export default {
         search() {
 
             let request = this.request;
-            request.checkIn = this.request.dates[0].toLocaleDateString("en-GB").replaceAll('/', '-')
-            request.checkOut = this.request.dates[1].toLocaleDateString("en-GB").replaceAll('/', '-')
+            request.checkIn = dateFormatter(this.request.dates[0])
+            request.checkOut = dateFormatter(this.request.dates[1])
 
             this.request = { hotelId: '', numberOfGuests: '', numberOfRooms: '', dates: '', currency: 'EUR' };
             axios.post('/api/search', request)
                 .then((res) => {
                     this.updateRooms(res.data)
+                    console.log(res.data);
+
                 })
         },
     }
